@@ -1,3 +1,6 @@
+
+Please see https://www.researchgate.net/publication/405548142_Setup_Guide_for_Apple_GPU_PoCL_CPU_Dual_OpenCL_Devices_on_macOS_Apple_Silicon_Octave
+to find how it works with Apple Silicon to show dual devices with PoCL. 
 ===============
 ocl_icd_wrapper
 ===============
