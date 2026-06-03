@@ -33,7 +33,7 @@ clIcdGetPlatformIDsKHR(cl_uint num_entries,
     }
 
     // Create dispatch table
-    KHRicdVendorDispatch *table = createDispatchTable(&table);
+    KHRicdVendorDispatch *table = createDispatchTable();
     if (!table)
     {
       return CL_OUT_OF_RESOURCES;
