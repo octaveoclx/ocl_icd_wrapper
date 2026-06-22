@@ -1,3 +1,4 @@
+This branch will trick the opencl enable the support of FP16 with cl_khr_fp16 flag. It has been tested with clBlast where the FP16 math operations are available with Apple silicon devices.
 
 Please see https://www.researchgate.net/publication/405548142_Setup_Guide_for_Apple_GPU_PoCL_CPU_Dual_OpenCL_Devices_on_macOS_Apple_Silicon_Octave
 to find how it works with Apple Silicon to show dual devices with PoCL. 

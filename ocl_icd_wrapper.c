@@ -223,6 +223,43 @@ _clGetDeviceInfo_(cl_device_id    device,
     }
     return CL_SUCCESS;
   }
+  else if (param_name == CL_DEVICE_EXTENSIONS)
+  {
+      // 1. 先调用真实驱动获取原始扩展字符串
+      size_t real_size;
+      cl_int err = clGetDeviceInfo(device->device, param_name, 0, NULL, &real_size);
+      if (err != CL_SUCCESS)
+          return err;
+
+      char *real_exts = malloc(real_size);
+      err = clGetDeviceInfo(device->device, param_name, real_size, real_exts, NULL);
+      if (err != CL_SUCCESS) {
+          free(real_exts);
+          return err;
+      }
+
+      const char *fp16_ext = " cl_khr_fp16";
+      size_t need_len = real_size + strlen(fp16_ext); // 包括结尾0
+
+      if (param_value_size && param_value_size < need_len) {
+          free(real_exts);
+          return CL_INVALID_VALUE;
+      }
+
+      if (param_value) {
+          strcpy(param_value, real_exts);
+          // 如果原始扩展字符串里还没有 cl_khr_fp16，就加上
+          if (!strstr(real_exts, "cl_khr_fp16")) {
+              strcat(param_value, fp16_ext);
+          }
+      }
+
+      if (param_value_size_ret)
+          *param_value_size_ret = need_len;
+
+      free(real_exts);
+      return CL_SUCCESS;
+  }
   else
   {
     return clGetDeviceInfo(
